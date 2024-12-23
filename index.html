@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kvízes Oldal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #0078d4;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            background-color: #0078d4;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #005ea0;
+        }
+        .question {
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kvízes Oldal</h1>
+        <p>Válassz egy témát, és kezdj el játszani!</p>
+    </header>
+    <main>
+        <div id="topic-selection">
+            <button class="btn" onclick="startQuiz('történelem')">Történelem</button>
+            <button class="btn" onclick="startQuiz('logika')">Logika</button>
+            <button class="btn" onclick="startQuiz('állatok')">Állatok</button>
+            <button class="btn" onclick="startQuiz('tudomány')">Tudomány</button>
+            <button class="btn" onclick="startQuiz('informatika')">Informatika</button>
+        </div>
+        <div id="quiz-container" style="display: none;">
+            <div id="question-container"></div>
+            <button id="next-question" class="btn" style="display: none;" onclick="nextQuestion()">Következő kérdés</button>
+        </div>
+    </main>
+    <script>
+        const questions = {
+            történelem: [
+                "Mikor volt a magyar honfoglalás?",
+                "Ki volt az első magyar király?",
+                "Mikor zajlott a mohácsi csata?",
+            ],
+            logika: [
+                "Mi 4 + 4 / 2?",
+                "Ha van három alma, és elveszek egyet, hány almám van?",
+                "Mi következik a 2, 4, 8, 16 sorozatban?",
+            ],
+            állatok: [
+                "Melyik madár nem tud repülni?",
+                "Melyik állat a leggyorsabb a földön?",
+                "Melyik állat híres a csíkjairól?",
+            ],
+            tudomány: [
+                "Milyen színű a klórgáz?",
+                "Mi a víz kémiai képlete?",
+                "Melyik bolygó a legnagyobb a Naprendszerben?",
+            ],
+            informatika: [
+                "Mit jelent a HTML rövidítés?",
+                "Mi az alapértelmezett port az HTTP-hez?",
+                "Mit csinál egy for ciklus?",
+            ]
+        };
+
+        let currentTopic = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function startQuiz(topic) {
+            currentTopic = topic;
+            currentQuestionIndex = 0;
+            score = 0;
+
+            document.getElementById('topic-selection').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const questionContainer = document.getElementById('question-container');
+            const nextButton = document.getElementById('next-question');
+
+            if (currentQuestionIndex < questions[currentTopic].length) {
+                const question = questions[currentTopic][currentQuestionIndex];
+                questionContainer.innerHTML = `<p class="question">${question}</p>`;
+                currentQuestionIndex++;
+                nextButton.style.display = 'block';
+            } else {
+                questionContainer.innerHTML = `<p>Vége a kvíznek! Elért pontszám: ${score}/${questions[currentTopic].length}</p>`;
+                nextButton.style.display = 'none';
+            }
+        }
+    </script>
+
+    <!-- Hogyan teheted közzé GitHub Pages-en: -->
+    <footer>
+        <h2>Hogyan teheted közzé:</h2>
+        <ol>
+            <li>Hozz létre egy <a href="https://github.com" target="_blank">GitHub</a> fiókot, ha még nincs.</li>
+            <li>Készíts egy új repository-t a GitHubon.</li>
+            <li>Az index.html fájlt töltsd fel a repository-ba.</li>
+            <li>A repository beállításaiban keresd meg a "Pages" részt.</li>
+            <li>Állítsd be a "Source"-t a fő ágra (pl. main), majd mentsd el.</li>
+            <li>Pár perc múlva az oldalad elérhető lesz a megadott linken (pl. https://felhasznalonev.github.io/repository-nev/).</li>
+        </ol>
+    </footer>
+</body>
+</html>
